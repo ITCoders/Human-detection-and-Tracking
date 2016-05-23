@@ -5,7 +5,7 @@ import imutils
 
 # The locatio of the image and the cascade file path
 
-imagePath = sys.argv[1]
+imagePath = 'sys.argv[1]'
 cascPath = 'haarcascade_frontalface_default.xml'
 
 # Create the haar cascade
