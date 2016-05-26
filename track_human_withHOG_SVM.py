@@ -6,6 +6,7 @@ import numpy as np
 import argparse
 import imutils
 import cv2
+import time
 import sys
 # construct the argument parse and parse the arguments
 # ap = argparse.ArgumentParser()
@@ -25,15 +26,16 @@ while True:
 		break
 	image = imutils.resize(frame, width=min(400, frame.shape[1]))
 	orig = image.copy()
-	
+	start = time.time()
 	# detect people in the image
 	(rects, weights) = hog.detectMultiScale(image, winStride=(4, 4),
-	padding=(8, 8), scale=1.05)
-	
+	padding=(16, 16), scale=1.06)
 	# draw the original bounding boxes
 	for (x, y, w, h) in rects:
 		cv2.rectangle(orig, (x, y), (x + w, y + h), (0, 0, 255), 2)
-	
+	end = time.time()
+	totalTimeTaken = end - start
+	print(totalTimeTaken)
 	# apply non-maxima suppression to the bounding boxes using a
 	# fairly large overlap threshold to try to maintain overlapping
 	# boxes that are still people
