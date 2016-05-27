@@ -8,6 +8,28 @@ import imutils
 import cv2
 import time
 import sys
+# funciton to draw head and shoulders of human 
+def draw_Head_shoulders(frame):
+	# cascade_path = "HS.xml"
+	cascade_path = "haarcascade_profileface.xml"
+	cascade = cv2.CascadeClassifier(cascade_path)
+	frame = imutils.resize(frame,height=300)
+	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+	start = time.time()
+	faces = cascade.detectMultiScale(
+	    gray,
+	    scaleFactor=1.1,
+	    minNeighbors=5,
+	    minSize=(10, 10),
+		flags=0
+	)
+	end = time.time()
+	total_time_taken = end - start
+	print(total_time_taken)
+	for (x, y, w, h) in faces:
+		cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+	cv2.imshow("face and Shoulders", frame)
+	key = cv2.waitKey(1)
 # construct the argument parse and parse the arguments
 # ap = argparse.ArgumentParser()
 # ap.add_argument("-i", "--images", required=True, help="path to images directory")
@@ -32,15 +54,10 @@ while True:
 	# detect people in the image
 	(rects, weights) = hog.detectMultiScale(image, winStride=(4, 4),
 	padding=(16, 16), scale=1.06)
-	print(type(rects))
 	if type(rects) is not tuple:
-		print(rects)
-		cropped = image[rects[0][1]:rects[0][3], rects[0][0]:rects[0][2]]
-		print(cropped)
-		# print(rects[0][1])
-		# key = cv2.waitKey(1)
-	# if key == ord("q"):
-	# 	break
+		cropped = image[rects[0][1]:rects[0][1]+rects[0][3],rects[0][0]:rects[0][0]+rects[0][2]]
+		draw_Head_shoulders(cropped)
+		# print(cropped)
 	# draw the original bounding boxes
 	# print(rects)
 	for (x, y, w, h) in rects:
@@ -63,7 +80,7 @@ while True:
 	
 	# show the output images
 	cv2.imshow("Before NMS", orig)
-	cv2.imshow("After NMS", image)
+	cv2.imshow("Window", image)
 	key = cv2.waitKey(1) & 0xFF
 	if key == ord("q"):
 		break
