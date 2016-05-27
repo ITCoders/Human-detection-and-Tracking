@@ -19,6 +19,7 @@ hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 # for imagePath in paths.list_images(args["images"]):
 	# load the image and resize it to (1) reduce detection time
 	# and (2) improve detection accuracy
+fgbg = cv2.createBackgroundSubtractorMOG2()
 camera = cv2.VideoCapture(sys.argv[1])
 while True:
 	grabbed,frame = camera.read()
@@ -27,15 +28,26 @@ while True:
 	image = imutils.resize(frame, width=min(400, frame.shape[1]))
 	orig = image.copy()
 	start = time.time()
+	fgbg.apply(image)
 	# detect people in the image
 	(rects, weights) = hog.detectMultiScale(image, winStride=(4, 4),
 	padding=(16, 16), scale=1.06)
+	print(type(rects))
+	if type(rects) is not tuple:
+		print(rects)
+		cropped = image[rects[0][1]:rects[0][3], rects[0][0]:rects[0][2]]
+		print(cropped)
+		# print(rects[0][1])
+		# key = cv2.waitKey(1)
+	# if key == ord("q"):
+	# 	break
 	# draw the original bounding boxes
+	# print(rects)
 	for (x, y, w, h) in rects:
 		cv2.rectangle(orig, (x, y), (x + w, y + h), (0, 0, 255), 2)
 	end = time.time()
 	totalTimeTaken = end - start
-	print(totalTimeTaken)
+	# print(totalTimeTaken)
 	# apply non-maxima suppression to the bounding boxes using a
 	# fairly large overlap threshold to try to maintain overlapping
 	# boxes that are still people
