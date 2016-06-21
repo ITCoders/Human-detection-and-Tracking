@@ -5,6 +5,7 @@ import sys
 import numpy as np
 from PIL import Image
 import imutils
+import argparse
 # path to haar cascade file for face detection
 cascadePath = "haarcascade_profileface.xml"
 faceCascade = cv2.CascadeClassifier(cascadePath)
@@ -29,7 +30,10 @@ def get_images_and_labels(path):
 			cv2.imshow('win',image[y: y + h, x: x + w])
 			cv2.waitKey(50)
 	return images, labels
-path = sys.argv[1]
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--images", required=True, help="path to images directory")
+args = vars(ap.parse_args())
+path = args["images"]
 images, labels = get_images_and_labels(path)
 cv2.destroyAllWindows()	
 

@@ -15,6 +15,7 @@ _In this project we have worked on the problem of human detection,face detection
 	* Python Image Library (PIL)
 	* Imutils
 	* numpy
+
 ## Approach
 * The code follows the steps given below:
 	1. First it reads a video and process each frame one by one.

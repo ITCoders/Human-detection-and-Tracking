@@ -1,5 +1,4 @@
 #import necessary packages
-from __future__ import print_function
 import cv2
 import os
 import time	
@@ -7,6 +6,7 @@ import sys
 import numpy as np
 from PIL import Image	
 import imutils
+import argparse	
 from imutils.object_detection import non_max_suppression
 
 subject_label = 1
@@ -15,6 +15,7 @@ subject_one_count = 0
 font = cv2.FONT_HERSHEY_SIMPLEX
 list_of_videos = []
 #haar-cascade to detect faces
+#provide path to haar cascade file
 cascade_path = "haarcascade_profileface.xml"
 face_cascade = cv2.CascadeClassifier(cascade_path)
 #HOG descriptor object
@@ -79,7 +80,12 @@ def put_label_on_face(frame,faces,labels):
 ####################################################
 #main function
 if __name__=='__main__':
-	path = sys.argv[1]
+	ap = argparse.ArgumentParser()
+	ap.add_argument("-v", "--videos", required=True, help="path to videos directory")
+	args = vars(ap.parse_args())
+	path = args["videos"]
+	print(path)
+	print(type(path))
 	for f in os.listdir(path):
 		if os.path.isfile(os.path.join(path,f)):
 			list_of_videos.append(f)
