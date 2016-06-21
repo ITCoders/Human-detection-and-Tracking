@@ -52,3 +52,7 @@ _In this project we have worked on the problem of human detection,face detection
 * improve the performance of the code
 * improve the accuracy of the code and reducing the false positive rate.
 * improve the face reocgnition accuracy to over 90 percent
+
+## Special Thanks to:
+* [Jignesh S. Bhatt](http://www.iiitvadodara.ac.in/faculty/jsb001.html) - Thank you for mentoring this project
+* [Kamal Awasthi](http://github.com/KamalAwasthi) - Helped in testing the code
