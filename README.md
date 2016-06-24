@@ -29,6 +29,7 @@ _In this project we have worked on the problem of human detection,face detection
 	* 'model.yaml' : This file contains trained model for given data. This trained model contains LBPH features of each and every face for given data.
 	* `face_cascades/` : This directory contains sample data for testing our codes. This data is prepared by extracting face images of a praticular person from some videos.
 	* `scripts/` : This directory contains some useful scripts that we used to work on different problems.
+
 ## Installation 
 * To run the code you have put all the input videos in one folder and then provide the path of that folder as command line argument.
 `python3 main.py /path/to/input/videos/`
@@ -51,7 +52,7 @@ _In this project we have worked on the problem of human detection,face detection
 ## To do
 * improve the performance of the code
 * improve the accuracy of the code and reducing the false positive rate.
-* improve the face reocgnition accuracy to over 90 percent
+* improve the face recognition accuracy to over 90 percent
 
 ## Special Thanks to:
 * [Jignesh S. Bhatt](http://www.iiitvadodara.ac.in/faculty/jsb001.html) - Thank you for mentoring this project
