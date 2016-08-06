@@ -1,5 +1,6 @@
 #import necessary packages
 import cv2
+import glob
 import os
 import time	
 import sys
@@ -84,41 +85,48 @@ if __name__=='__main__':
 	ap.add_argument("-v", "--videos", required=True, help="path to videos directory")
 	args = vars(ap.parse_args())
 	path = args["videos"]
-	print(path)
-	print(type(path))
+	# print(path)
+	# print(type(path))
 	for f in os.listdir(path):
-		if os.path.isfile(os.path.join(path,f)):
-			list_of_videos.append(f)
-	print(list_of_videos)
-	if os.path.exists("model.yaml"):
-		recognizer.load("model.yaml")
-		for video in list_of_videos:
-			camera = cv2.VideoCapture(os.path.join(path,video))
-			while True:
-				starttime = time.time()
-				grabbed,frame = camera.read()
-				if not grabbed:
-					break
-				frame_orginal = imutils.resize(frame, width=min(500, frame.shape[1]))
-				frame_orginal1 = cv2.cvtColor(frame_orginal,cv2.COLOR_BGR2GRAY)
-				frame_processed = detect_people(frame_orginal1)
-				faces = detect_face(frame_orginal)
-				if len(faces) > 0:
-					frame_processed = draw_faces(frame_processed,faces)
-					label = recognize_face(frame_orginal,faces)
-					frame_processed = put_label_on_face(frame_processed,faces,label)
-					for i in label:
-						total_count = total_count+1
-						if i == 1:
-							subject_one_count = subject_one_count+1
-				cv2.imshow("window",frame_processed)
-				key = cv2.waitKey(1) & 0xFF
-				if key == ord("q"):
-					break
-			camera.release()
-			cv2.destroyAllWindows()
-			endtime = time.time()
-			print("accuracy is ",subject_one_count*100/total_count)
-		# print("total_count is {} and subject one count is {}".format(total_count,subject_one_count))
-	else:
-		print("model file not found")
+		# print(f)
+		list_of_videos = glob.glob(os.path.join(os.path.abspath(path),f)+"/*.mp4")
+		print(os.path.join(os.path.abspath(path),f)+"*.mp4")
+		# print(os.path.join(path,f))
+		# print(os.path.abspath(path))
+		print(list_of_videos)
+		if os.path.exists("model.yaml"):
+			recognizer.load("model.yaml")
+			for video in list_of_videos:
+				camera = cv2.VideoCapture(os.path.join(path,video))
+				while True:
+					starttime = time.time()
+					grabbed,frame = camera.read()
+					if not grabbed:
+						break
+					frame_orginal = imutils.resize(frame, width=min(500, frame.shape[1]))
+					frame_orginal1 = cv2.cvtColor(frame_orginal,cv2.COLOR_BGR2GRAY)
+					frame_processed = detect_people(frame_orginal1)
+					faces = detect_face(frame_orginal)
+					if len(faces) > 0:
+						frame_processed = draw_faces(frame_processed,faces)
+						label = recognize_face(frame_orginal,faces)
+						frame_processed = put_label_on_face(frame_processed,faces,label)
+						for i in label:
+							total_count = total_count+1
+							if i == 1:
+								subject_one_count = subject_one_count+1
+					cv2.imshow("window",frame_processed)
+					key = cv2.waitKey(1) & 0xFF
+					if key == ord("q"):
+						break
+				camera.release()
+				cv2.destroyAllWindows()
+				endtime = time.time()
+				# print("accuracy is ",subject_one_count*100/total_count)
+			# print("total_count is {} and subject one count is {}".format(total_count,subject_one_count))
+		else:
+			print("model file not found")	
+		list_of_videos = []
+
+
+
