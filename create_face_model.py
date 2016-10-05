@@ -6,12 +6,24 @@ import numpy as np
 from PIL import Image
 import imutils
 import argparse
-# path to haar cascade file for face detection
+
 cascadePath = "haarcascade_profileface.xml"
 faceCascade = cv2.CascadeClassifier(cascadePath)
 recognizer = cv2.face.createLBPHFaceRecognizer()
+
+
 def get_images_and_labels(path):
-	i=0
+	"""
+	convert images to matrices
+	assign label to every image according to person
+	Using test data to make the machine learn this data
+	Args:
+		path: path to images directory
+
+	Returns:
+	matrix of images, labels
+	"""
+	i = 0
 	image_paths = [os.path.join(path, f) for f in os.listdir(path) if not f.endswith('.sad')]
 	images = []
 	labels = []
@@ -27,17 +39,20 @@ def get_images_and_labels(path):
 			# i=i+1
 			labels.append(nbr)
 			cv2.imshow("Adding faces to traning set", image[y: y + h, x: x + w])
-			cv2.imshow('win',image[y: y + h, x: x + w])
+			cv2.imshow('win', image[y: y + h, x: x + w])
 			cv2.waitKey(50)
 	return images, labels
+
+
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--images", required=True, help="path to images directory")
 args = vars(ap.parse_args())
 path = args["images"]
 images, labels = get_images_and_labels(path)
-cv2.destroyAllWindows()	
+cv2.destroyAllWindows()
 
 recognizer.train(images, np.array(labels))
+"""
+save the trained data to cont.yaml file
+"""
 recognizer.save("cont.yaml")
-# command for loading a model file
-# recognizer.load("/home/arpit/Projects/Survelliance_System/cont.yaml")
