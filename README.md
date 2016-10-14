@@ -24,11 +24,11 @@ _In this project we have worked on the problem of human detection,face detection
     4. if a human face is detected it tries to recognise it with a pre-trained model file.
     5. If human face is recognised it puts the label on that human face else it moves to step 2 again for next frame 
 * The repository is structured as follows:
-	* `main.py` : This is the main file that detects and recognizes humans.
-	* 'create_face_model.py' : This python script is used to create model file using the given data in `data/` folder 
-	* 'model.yaml' : This file contains trained model for given data. This trained model contains LBPH features of each and every face for given data.
-	* `face_cascades/` : This directory contains sample data for testing our codes. This data is prepared by extracting face images of a praticular person from some videos.
-	* `scripts/` : This directory contains some useful scripts that we used to work on different problems.
+    * `main.py` : This is the main file that detects and recognises humans.
+    * 'create_face_model.py' : This python script is used to create model file using the given data in `data/` folder 
+    * 'model.yaml' : This file contains trained model for given data. This trained model contains LBPH features of each and every face for given data.
+    * `face_cascades/` : This directory contains sample data for testing our codes. This data is prepared by extracting face images of a particular person from some videos.
+    * `scripts/` : This directory contains some useful scripts that we used to work on different problems.
 
 ## Installation 
 * To run the code you have put all the input videos in one folder and then provide the path of that folder as command line argument.
