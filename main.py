@@ -100,7 +100,7 @@ class make:
 			frame:
 			faces:
 			labels:
-	
+
 		Returns:
 			processed frame
 		"""
@@ -141,9 +141,9 @@ if __name__ == '__main__':
 						label = people.recognize_face(frame_orginal, faces)
 						frame_processed = make.put_label_on_face(frame_processed, faces, label)
 						for i in label:
-							total_count = total_count + 1
+							total_count += 1
 							if i == 1:
-								subject_one_count = subject_one_count + 1
+                                subject_one_count += 1
 					cv2.imshow("window", frame_processed)
 					key = cv2.waitKey(1) & 0xFF
 					if key == ord("q"):

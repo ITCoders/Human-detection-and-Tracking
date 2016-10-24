@@ -19,7 +19,7 @@ Y=[]
 
 n_sample = 0 #Total number of Images
 h = 112 #Height of image in float
-w = 92 #Width of image in float 
+w = 92 #Width of image in float
 n_features = 187500 #Length of feature vector
 target_names = [] #Array to store the names of the persons
 label_count = 0
@@ -33,9 +33,9 @@ for directory in os.listdir(path):
         # print len(featurevector)
         X.append(featurevector)
         Y.append(label_count)
-        n_sample = n_sample + 1
+        n_sample += 1
     target_names.append(directory)
-    label_count=label_count+1
+    label_count += 1
 
 # print Y
 # print target_names

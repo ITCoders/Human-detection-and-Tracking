@@ -4,7 +4,7 @@ from PIL import Image
 import sys
 import imutils
 import Surv_final
-import os	
+import os
 path = "/home/arpit/Projects/Survelliance_System/data/extra2/"
 camera = cv2.VideoCapture(sys.argv[1])
 i=12000
@@ -19,4 +19,4 @@ while True:
 			cv2.imwrite(os.path.join(path,str(i)+".jpg"),cropped)
 		# for i in range(1,5):
 		# 	frame = camera.read()
-	i = i+1
+    i += 1
