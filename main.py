@@ -143,7 +143,7 @@ if __name__ == '__main__':
 						for i in label:
 							total_count += 1
 							if i == 1:
-                                subject_one_count += 1
+								subject_one_count += 1
 					cv2.imshow("window", frame_processed)
 					key = cv2.waitKey(1) & 0xFF
 					if key == ord("q"):

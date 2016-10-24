@@ -11,9 +11,9 @@ faceCascade = cv2.CascadeClassifier(cascadePath)
 recognizer = cv2.face.createLBPHFaceRecognizer()
 def get_images_and_labels(path):
 	image_paths = [os.path.join(path, f) for f in os.listdir(path) if not f.endswith('.sad')]
-    # images will contains face images
+	# images will contains face images
 	images = []
-    # labels will contains the label that is assigned to the image
+	# labels will contains the label that is assigned to the image
 	labels = []
 	for image_path in image_paths:
 		image_pil = Image.open(image_path).convert('L')
@@ -30,7 +30,7 @@ def get_images_and_labels(path):
 # Path to the Yale Dataset
 path = sys.argv[1]
 images, labels = get_images_and_labels(path)
-cv2.destroyAllWindows()	
+cv2.destroyAllWindows()
 
 recognizer.train(images, np.array(labels))
 recognizer.save("cont.yaml")
