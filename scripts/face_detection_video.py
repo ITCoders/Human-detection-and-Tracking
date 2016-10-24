@@ -8,7 +8,7 @@ faceCascade = cv2.CascadeClassifier(cascPath)
 
 cap = cv2.VideoCapture(sys.argv[1])
 
-while (cap.isOpened()):
+while cap.isOpened():
     # Capture frame-by-frame
     ret, frame =cap.read()
 

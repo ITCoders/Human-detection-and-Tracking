@@ -3,7 +3,7 @@ import numpy as np
 
 cap = cv2.VideoCapture('video.mp4')
 
-while(1):
+while 1:
 
     # Take each frame
     frame = cap.read()

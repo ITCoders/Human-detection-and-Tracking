@@ -74,7 +74,7 @@ def read_images(path, sz=None):
                 try:
                     im = cv2.imread(os.path.join(subject_path, filename), cv2.IMREAD_GRAYSCALE)
                     # resize to given size (if given)
-                    if (sz is not None):
+                    if sz is not None:
                         im = cv2.resize(im, sz)
                     X.append(np.asarray(im, dtype=np.uint8))
                     y.append(c)
@@ -143,7 +143,7 @@ if __name__ == "__main__":
     if out_dir is None:
         cv2.imshow("mean", mean_resized)
     else:
-        cv2.imwrite("%s/mean.png" % (out_dir), mean_resized)
+        cv2.imwrite("%s/mean.png" % out_dir, mean_resized)
     # Turn the first (at most) 16 eigenvectors into grayscale
     # images. You could also use cv::normalize here, but sticking
     # to NumPy is much easier for now.
