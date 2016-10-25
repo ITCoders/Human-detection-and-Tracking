@@ -38,19 +38,19 @@ import cv2
 import numpy as np
 
 
-def normalize(X, low, high, dtype=None):
+def normalize(x, low, high, dtype=None):
     """Normalizes a given array in X to a value between low and high."""
-    X = np.asarray(X)
-    minX, maxX = np.min(X), np.max(X)
+    x = np.asarray(x)
+    min_x, max_x = np.min(x), np.max(x)
     # normalize to [0...1].
-    X -= float(minX)
-    X /= float((maxX - minX))
+    x -= float(min_x)
+    x /= float((max_x - min_x))
     # scale to [low...high].
-    X = X * (high - low)
-    X = X + low
+    x = x * (high - low)
+    x = x + low
     if dtype is None:
-        return np.asarray(X)
-    return np.asarray(X, dtype=dtype)
+        return np.asarray(x)
+    return np.asarray(x, dtype=dtype)
 
 
 def read_images(path, sz=None):
@@ -67,7 +67,7 @@ def read_images(path, sz=None):
             y: The corresponding labels (the unique number of the subject, person) in a Python list.
     """
     c = 0
-    X, y = [], []
+    x, y = [], []
     for dirname, dirnames, filenames in os.walk(path):
         for subdirname in dirnames:
             subject_path = os.path.join(dirname, subdirname)
@@ -78,7 +78,7 @@ def read_images(path, sz=None):
                     # resize to given size (if given)
                     if sz is not None:
                         im = cv2.resize(im, sz)
-                    X.append(np.asarray(im, dtype=np.uint8))
+                    x.append(np.asarray(im, dtype=np.uint8))
                     y.append(c)
                 except IOError, (errno, strerror):
                     print
@@ -88,7 +88,7 @@ def read_images(path, sz=None):
                     "Unexpected error:", sys.exc_info()[0]
                     raise
             c += 1
-    return [X, y]
+    return [x, y]
 
 
 if __name__ == "__main__":
