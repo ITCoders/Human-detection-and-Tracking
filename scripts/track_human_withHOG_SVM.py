@@ -60,7 +60,7 @@ while True:
                                             padding=(16, 16), scale=1.06)
     if type(rects) is not tuple:
         cropped = image[rects[0][1]:rects[0][1] + rects[0][3],
-                  rects[0][0]:rects[0][0] + rects[0][2]]
+                        rects[0][0]:rects[0][0] + rects[0][2]]
         draw_head_shoulders(cropped)
     # print(cropped)
     # draw the original bounding boxes
