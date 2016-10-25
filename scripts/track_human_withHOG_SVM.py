@@ -11,7 +11,7 @@ import sys
 
 
 # funciton to draw head and shoulders of human
-def draw_Head_shoulders(frame):
+def draw_head_shoulders(frame):
     # cascade_path = "HS.xml"
     cascade_path = "haarcascade_profileface.xml"
     cascade = cv2.CascadeClassifier(cascade_path)
@@ -61,7 +61,7 @@ while True:
     if type(rects) is not tuple:
         cropped = image[rects[0][1]:rects[0][1] + rects[0][3],
                   rects[0][0]:rects[0][0] + rects[0][2]]
-        draw_Head_shoulders(cropped)
+        draw_head_shoulders(cropped)
     # print(cropped)
     # draw the original bounding boxes
     # print(rects)
