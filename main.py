@@ -139,9 +139,8 @@ if __name__ == '__main__':
                     grabbed, frame = camera.read()
                     if not grabbed:
                         break
-                    frame_orginal = imutils.resize(frame, width=min(500,
-                                                                    frame.shape[
-                                                                        1]))
+                    frame_orginal = imutils.resize(
+                        frame, width=min(500, frame.shape[1]))
                     frame_orginal1 = cv2.cvtColor(frame_orginal,
                                                   cv2.COLOR_BGR2GRAY)
                     frame_processed = People.detect_people(frame_orginal1)
