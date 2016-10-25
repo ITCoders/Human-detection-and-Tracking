@@ -16,7 +16,7 @@ car_cascade = cv2.CascadeClassifier(cascPath)
 image = cv2.imread(imagePath)
 
 # Resize the image so it fits in the screen
-image1 = imutils.resize(image,height=500)
+image1 = imutils.resize(image, height=500)
 gray = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
 
 # Detect faces in the image
@@ -25,18 +25,18 @@ faces = car_cascade.detectMultiScale(
     scaleFactor=1.1,
     minNeighbors=5,
     minSize=(30, 30),
-  	#flags = cv2.cv.CV_HAAR_SCALE_IMAGE
-  	flags=0
+    # flags = cv2.cv.CV_HAAR_SCALE_IMAGE
+    flags=0
 )
 face = non_max_suppression(faces, probs=None, overlapThresh=0.3)
-if format(len(faces))==1:
-	print("Found {0} face!".format(len(faces)))
+if format(len(faces)) == 1:
+    print("Found {0} face!".format(len(faces)))
 else:
-	print("Found {0} faces!".format(len(faces)))
+    print("Found {0} faces!".format(len(faces)))
 
 # Draw a rectangle around the faces
 for (x, y, w, h) in face:
-    cv2.rectangle(image1, (x, y), (x+w, y+h), (0, 255, 0), 2)
+    cv2.rectangle(image1, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
 cv2.imshow("Faces found", image1)
 cv2.waitKey(0)
