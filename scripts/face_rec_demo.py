@@ -131,8 +131,7 @@ if __name__ == "__main__":
     # the associated confidence:
     [p_label, p_confidence] = model.predict(np.asarray(x[0]))
     # Print it:
-    print
-    "Predicted label = %d (confidence=%.2f)" % (p_label, p_confidence)
+    print "Predicted label = %d (confidence=%.2f)" % (p_label, p_confidence)
     # Cool! Finally we'll plot the Eigenfaces, because that's
     # what most people read in the papers are keen to see.
     #
@@ -140,8 +139,7 @@ if __name__ == "__main__":
     # data, because the cv::FaceRecognizer is a cv::Algorithm.
     #
     # You can see the available parameters with getParams():
-    print
-    model.getParams()
+    print model.getParams()
     # Now let's get some data:
     mean = model.getMat("mean")
     eigenvectors = model.getMat("eigenvectors")
