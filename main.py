@@ -24,7 +24,7 @@ recognizer = cv2.face.createLBPHFaceRecognizer()
 
 
 # people detection
-class people:
+class People:
     def detect_people(self, frame):
         """
         Detect Humans using HOG descriptor
@@ -78,7 +78,7 @@ class people:
 
 
 # face drawing and putting labels
-class make:
+class Make:
     def draw_faces(self, frame, faces):
         """
         draw rectangle around detected faces
@@ -90,11 +90,11 @@ class make:
         face drawn processed frame
         """
         for (x, y, w, h) in faces:
-            xA = x
-            yA = y
-            xB = x + w
-            yB = y + h
-            cv2.rectangle(frame, (xA, yA), (xB, yB), (0, 255, 0), 2)
+            x_a = x
+            y_a = y
+            x_b = x + w
+            y_b = y + h
+            cv2.rectangle(frame, (x_a, y_a), (x_b, y_b), (0, 255, 0), 2)
         return frame
 
     def put_label_on_face(self, frame, faces, labels):
@@ -144,13 +144,13 @@ if __name__ == '__main__':
                                                                         1]))
                     frame_orginal1 = cv2.cvtColor(frame_orginal,
                                                   cv2.COLOR_BGR2GRAY)
-                    frame_processed = people.detect_people(frame_orginal1)
-                    faces = people.detect_face(frame_orginal)
+                    frame_processed = People.detect_people(frame_orginal1)
+                    faces = People.detect_face(frame_orginal)
                     if len(faces) > 0:
-                        frame_processed = make.draw_faces(frame_processed,
+                        frame_processed = Make.draw_faces(frame_processed,
                                                           faces)
-                        label = people.recognize_face(frame_orginal, faces)
-                        frame_processed = make.put_label_on_face(
+                        label = People.recognize_face(frame_orginal, faces)
+                        frame_processed = Make.put_label_on_face(
                             frame_processed, faces, label)
                         for i in label:
                             total_count += 1
