@@ -41,12 +41,10 @@ from sklearn.metrics import confusion_matrix
 from sklearn.decomposition import RandomizedPCA
 from sklearn.svm import SVC
 
-
 print(__doc__)
 
 # Display progress logs on stdout
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
-
 
 ###############################################################################
 # Download the data, if not already on disk and load it as numpy arrays
@@ -71,7 +69,6 @@ print("Total dataset size:")
 print("n_samples: %d" % n_samples)
 print("n_features: %d" % n_features)
 print("n_classes: %d" % n_classes)
-
 
 ###############################################################################
 # Split into a training set and a test set using a stratified k fold
@@ -100,7 +97,6 @@ X_train_pca = pca.transform(X_train)
 X_test_pca = pca.transform(X_test)
 print("done in %0.3fs" % (time() - t0))
 
-
 ###############################################################################
 # Train a SVM classification model
 
@@ -113,7 +109,6 @@ clf = clf.fit(X_train_pca, y_train)
 print("done in %0.3fs" % (time() - t0))
 print("Best estimator found by grid search:")
 print(clf.best_estimator_)
-
 
 ###############################################################################
 # Quantitative evaluation of the model quality on the test set
@@ -148,6 +143,7 @@ def title(y_pred, y_test, target_names, i):
     pred_name = target_names[y_pred[i]].rsplit(' ', 1)[-1]
     true_name = target_names[y_test[i]].rsplit(' ', 1)[-1]
     return 'predicted: %s\ntrue:      %s' % (pred_name, true_name)
+
 
 prediction_titles = [title(y_pred, y_test, target_names, i)
                      for i in range(y_pred.shape[0])]
