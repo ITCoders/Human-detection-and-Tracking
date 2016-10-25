@@ -103,7 +103,7 @@ if __name__ == "__main__":
         "USAGE: facerec_demo.py </path/to/images> [</path/to/store/images/at>]"
         sys.exit()
     # Now read in the image data. This must be a valid path!
-    [X, y] = read_images(sys.argv[1])
+    [x, y] = read_images(sys.argv[1])
     # Convert labels to 32bit integers. This is a workaround for 64bit machines,
     # because the labels will truncated else. This will be fixed in code as
     # soon as possible, so Python users don't need to know about this.
@@ -120,7 +120,7 @@ if __name__ == "__main__":
     # Learn the model. Remember our function returns Python lists,
     # so we use np.asarray to turn them into NumPy lists to make
     # the OpenCV wrapper happy:
-    model.train(np.asarray(X), np.asarray(y))
+    model.train(np.asarray(x), np.asarray(y))
     # We now get a prediction from the model! In reality you
     # should always use unseen images for testing your model.
     # But so many people were confused, when I sliced an image
@@ -129,7 +129,7 @@ if __name__ == "__main__":
     #
     # model.predict is going to return the predicted label and
     # the associated confidence:
-    [p_label, p_confidence] = model.predict(np.asarray(X[0]))
+    [p_label, p_confidence] = model.predict(np.asarray(x[0]))
     # Print it:
     print
     "Predicted label = %d (confidence=%.2f)" % (p_label, p_confidence)
@@ -147,7 +147,7 @@ if __name__ == "__main__":
     eigenvectors = model.getMat("eigenvectors")
     # We'll save the mean, by first normalizing it:
     mean_norm = normalize(mean, 0, 255, dtype=np.uint8)
-    mean_resized = mean_norm.reshape(X[0].shape)
+    mean_resized = mean_norm.reshape(x[0].shape)
     if out_dir is None:
         cv2.imshow("mean", mean_resized)
     else:
@@ -156,8 +156,8 @@ if __name__ == "__main__":
     # images. You could also use cv::normalize here, but sticking
     # to NumPy is much easier for now.
     # Note: eigenvectors are stored by column:
-    for i in xrange(min(len(X), 16)):
-        eigenvector_i = eigenvectors[:, i].reshape(X[0].shape)
+    for i in xrange(min(len(x), 16)):
+        eigenvector_i = eigenvectors[:, i].reshape(x[0].shape)
         eigenvector_i_norm = normalize(eigenvector_i, 0, 255, dtype=np.uint8)
         # Show or save the images:
         if out_dir is None:
