@@ -1,5 +1,6 @@
 from time import time
-import numpy, os
+import numpy
+import os
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.cross_validation import train_test_split
@@ -8,34 +9,34 @@ from sklearn.decomposition import RandomizedPCA
 from sklearn.svm import SVC
 from PIL import Image
 
-#Path to the root image directory containing sub-directories of images
-path="/home/arpit/ATnT_data/"
+# Path to the root image directory containing sub-directories of images
+path = "/home/arpit/ATnT_data/"
 testImage = "/home/arpit/new/10.pgm"
 
-#Flat image Feature Vector
-X=[]
-#Int array of Label Vector
-Y=[]
+# Flat image Feature Vector
+X = []
+# Int array of Label Vector
+Y = []
 
-n_sample = 0 #Total number of Images
-h = 112 #Height of image in float
-w = 92 #Width of image in float 
-n_features = 187500 #Length of feature vector
-target_names = [] #Array to store the names of the persons
+n_sample = 0  # Total number of Images
+h = 112  # Height of image in float
+w = 92  # Width of image in float
+n_features = 187500  # Length of feature vector
+target_names = []  # Array to store the names of the persons
 label_count = 0
 n_classes = 0
 
 for directory in os.listdir(path):
-    for file in os.listdir(path+directory):
-        print(path+directory+"/"+file)
-        img=Image.open(path+directory+"/"+file)
-        featurevector=numpy.array(img).flatten()
+    for file in os.listdir(path + directory):
+        print(path + directory + "/" + file)
+        img = Image.open(path + directory + "/" + file)
+        featurevector = numpy.array(img).flatten()
         # print len(featurevector)
         X.append(featurevector)
         Y.append(label_count)
-        n_sample = n_sample + 1
+        n_sample += 1
     target_names.append(directory)
-    label_count=label_count+1
+    label_count += 1
 
 # print Y
 # print target_names
@@ -101,7 +102,7 @@ A_predict = clf.predict(A_pca)
 B = numpy.array(A)
 print(B)
 print(A_predict)
-print(classification_report(B,A_predict))
+print(classification_report(B, A_predict))
 # Prediction of user based on the model
 # test = []
 # testImage=Image.open(testImage)
