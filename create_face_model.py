@@ -7,7 +7,7 @@ from PIL import Image
 import imutils
 import argparse
 
-cascadePath = "haarcascade_profileface.xml"
+cascadePath = "face_cascades/haarcascade_profileface.xml"
 faceCascade = cv2.CascadeClassifier(cascadePath)
 recognizer = cv2.face.createLBPHFaceRecognizer()
 
