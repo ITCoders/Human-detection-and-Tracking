@@ -22,7 +22,7 @@ int main(int argc, const char** argv)
     }
 
 
-	VideoCapture cam("5.mp4");  /*reading input video*/
+	VideoCapture cam(argv[1]);  /*reading input video*/
 	if ( !cam.isOpened() )  // if not read exit
     {
          cout << "Cannot open the video file" << endl;
