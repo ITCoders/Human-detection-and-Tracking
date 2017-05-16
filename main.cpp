@@ -6,66 +6,99 @@
 using namespace std;
 using namespace cv;
 
-String face_cascade1_name = "haarcascade_frontalface_default.xml";
+String face_cascade1_name = "haarcascade_profileface.xml";
 CascadeClassifier face_cascade1;
 
-void detect_faces( Mat frame, double fps);
+vector<Rect> detect_faces( Mat frame);
+Mat detect_people( Mat frame);
+Mat draw_faces(Mat frame1, vector<Rect> faces);
 
-int main(int argc, const char** argv)
+int main (int argc, const char * argv[])
 {
-	Mat frame;
-	Mat img;
-	/*throwing error when any cascade file is unable to load*/
+    VideoCapture cap(argv[1]);
+ 
+    if (!cap.isOpened()) /*checking whether video file is read successfully*/
+    {
+        cout << "Cannot open the video file" << endl;
+        return -1;
+    }    
+    
+    /*throwing error when any cascade file is unable to load*/
     if( !face_cascade1.load( face_cascade1_name ) )
     { 
         printf("--(!)Error loading face cascade1\n"); return -1; 
     }
 
-
-	VideoCapture cam(argv[1]);  /*reading input video*/
-	if ( !cam.isOpened() )  // if not read exit
+    Mat frame,frame1;
+    vector<Rect> faces;
+ 
+    while (true)
     {
-         cout << "Cannot open the video file" << endl;
-         return -1;
+        cap >> frame;
+        if (frame.empty())
+            break;
+        frame1=detect_people(frame);
+        faces=detect_faces(frame);
+        frame=draw_faces(frame1, faces); /*draw circle around faces*/
+        imshow("human_detection and face_detction", frame);
+        waitKey(1);
     }
-
-    double fps = cam.get(CV_CAP_PROP_FPS); /*getting frames per seconds*/
-    cout << "frames per seconds :" << fps << endl;
-
-
-    while(1)
-    {
-    	bool read_success= cam.read(frame);
-
-    	if(!read_success) /*read sucessfull*/
-    	{
-    		cout << "Can't read frames" << endl;
-    		break;
-    	}
-
-    	detect_faces(frame,fps);	 
-    }
-
     return 0;
 }
 
-void detect_faces( Mat frame, double fps )
+Mat detect_people( Mat frame)
+{   
+    HOGDescriptor hog;
+    hog.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector());
+	/*resize(frame, frame, Size(),0.5,0.5);*/
+    vector<Rect> detected, detected_filtered;
+    hog.detectMultiScale(frame, detected, 0, Size(8,8), Size(32,32), 1.05, 2);
+    size_t i, j;
+    /*checking for the distinctly detected human in a frame*/
+    for (i=0; i<detected.size(); i++) 
+    {
+        Rect r = detected[i];
+        for (j=0; j<detected.size(); j++) 
+            if (j!=i && (r & detected[j]) == r)
+                break;
+        if (j== detected.size())
+                detected_filtered.push_back(r);
+        }
+    /*for each distinctly detected human draw rectangle around it*/
+    for (i=0; i<detected_filtered.size(); i++) 
+    {
+        Rect r = detected_filtered[i];
+        r.x += cvRound(r.width*0.1);
+        r.width = cvRound(r.width*0.8);
+        r.y += cvRound(r.height*0.07);
+        r.height = cvRound(r.height*0.8);
+        rectangle(frame, r.tl(), r.br(), Scalar(0,255,0), 3);       
+    }
+ 
+        return frame;
+}
+
+vector<Rect> detect_faces( Mat frame)
 {
-	std::vector<Rect> faces;
+	vector<Rect> faces;
     Mat frame_gray;
     cvtColor( frame, frame_gray, COLOR_BGR2GRAY ); /*converting input image in grayscale form*/
     equalizeHist( frame_gray, frame_gray ); 
     
+    /*resize(frame_gray, frame_gray, Size(),0.5,0.5);*/
     /*Detecting faces*/
     face_cascade1.detectMultiScale( frame_gray, faces, 1.2, 2, 0|CASCADE_SCALE_IMAGE, Size(30, 30) );
+    return faces;  
+}
+
+Mat draw_faces(Mat frame1, vector<Rect> faces)
+{   
     for ( size_t i = 0; i < faces.size(); i++ )
     {   
-        /*Drawing circle around faces*/ 
+        /*Drawing circle around faces*/
         Point center( faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2 );
-        ellipse( frame, center, Size( faces[i].width/2, faces[i].height/2 ), 0, 0, 360, Scalar( 0, 250, 255 ), 4, 8, 0 );
+        ellipse( frame1, center, Size( faces[i].width/2, faces[i].height/2 ), 0, 0, 360, Scalar( 0, 250, 255 ), 4, 8, 0 );
     }
+    return frame1;
 
-    namedWindow( "Detected faces", WINDOW_AUTOSIZE );
-    imshow( "Detected faces", frame );
-    waitKey(100/fps);   
 }
