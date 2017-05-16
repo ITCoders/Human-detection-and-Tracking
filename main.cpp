@@ -1,6 +1,9 @@
 #include "opencv2/objdetect.hpp"
+#include <opencv2/core/core.hpp>
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
+#include "opencv2/face.hpp"
+
 #include <iostream>
 
 using namespace std;
@@ -8,14 +11,17 @@ using namespace cv;
 
 String face_cascade1_name = "haarcascade_profileface.xml";
 CascadeClassifier face_cascade1;
-
+Ptr<face::FaceRecognizer> recognizer = face::createLBPHFaceRecognizer();
 vector<Rect> detect_faces( Mat frame);
 Mat detect_people( Mat frame);
 Mat draw_faces(Mat frame1, vector<Rect> faces);
+int* recognize_face(Mat frame, vector<Rect> faces);
 
 int main (int argc, const char * argv[])
 {
+    
     VideoCapture cap(argv[1]);
+    recognizer->load("model.yaml");
  
     if (!cap.isOpened()) /*checking whether video file is read successfully*/
     {
@@ -29,7 +35,7 @@ int main (int argc, const char * argv[])
         printf("--(!)Error loading face cascade1\n"); return -1; 
     }
 
-    Mat frame,frame1;
+    Mat frame,frame1,frame2;
     vector<Rect> faces;
  
     while (true)
@@ -39,7 +45,8 @@ int main (int argc, const char * argv[])
             break;
         frame1=detect_people(frame);
         faces=detect_faces(frame);
-        frame=draw_faces(frame1, faces); /*draw circle around faces*/
+        frame2=draw_faces(frame1, faces); /*draw circle around faces*/
+	recognize_face(frame,faces);
         imshow("human_detection and face_detction", frame);
         waitKey(1);
     }
@@ -102,3 +109,25 @@ Mat draw_faces(Mat frame1, vector<Rect> faces)
     return frame1;
 
 }
+
+int* recognize_face(Mat frame, vector<Rect> faces)
+{
+	int a;
+	double b;
+	int predict_label[100];
+	double predict_conf[100];
+	Mat frame_original_grayscale;
+	for ( size_t i = 0; i < faces.size(); i++ )
+	{
+		cv::cvtColor( frame, frame_original_grayscale, COLOR_BGR2GRAY );
+		equalizeHist(frame_original_grayscale,frame_original_grayscale); 
+		
+		
+		recognizer->predict(frame_original_grayscale, a,b);
+		predict_label[i]=a;
+		predict_conf[i]=b;
+		cout << a << b << endl;
+	}
+	return predict_label;
+}
+
