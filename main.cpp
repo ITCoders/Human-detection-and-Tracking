@@ -3,7 +3,7 @@
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
 #include "opencv2/face.hpp"
-
+#include <string>
 #include <iostream>
 
 using namespace std;
@@ -16,6 +16,8 @@ vector<Rect> detect_faces( Mat frame);
 Mat detect_people( Mat frame);
 Mat draw_faces(Mat frame1, vector<Rect> faces);
 int* recognize_face(Mat frame, vector<Rect> faces);
+Mat put_label_on_face(Mat frame,vector<Rect> faces,int* label)
+
 
 int main (int argc, const char * argv[])
 {
@@ -37,7 +39,7 @@ int main (int argc, const char * argv[])
 
     Mat frame,frame1,frame2;
     vector<Rect> faces;
- 
+    int label[100];
     while (true)
     {
         cap >> frame;
@@ -46,7 +48,8 @@ int main (int argc, const char * argv[])
         frame1=detect_people(frame);
         faces=detect_faces(frame);
         frame2=draw_faces(frame1, faces); /*draw circle around faces*/
-	recognize_face(frame,faces);
+	label=recognize_face(frame,faces);
+	put_label_on_face(frame,face,label);
         imshow("human_detection and face_detction", frame);
         waitKey(1);
     }
@@ -126,8 +129,22 @@ int* recognize_face(Mat frame, vector<Rect> faces)
 		recognizer->predict(frame_original_grayscale, a,b);
 		predict_label[i]=a;
 		predict_conf[i]=b;
-		cout << a << b << endl;
+		cout << "label="<<a <<endl<< "conf="<<b << endl;
 	}
 	return predict_label;
 }
 
+
+Mat put_label_on_face(Mat frame,vector<Rect> faces,int* label)
+{
+	int i=0;
+	for ( size_t j = 0; j < faces.size(); j++ )
+	{
+	cv::putText(frame, str(label[j]), textOrg, fontFace,2, Scalar::all(255), 3,8);
+	i++;
+	}
+	return frame;
+}
+
+
+}
