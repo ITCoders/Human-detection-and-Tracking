@@ -7,8 +7,6 @@ import argparse
 from imutils.object_detection import non_max_suppression
 
 subject_label = 1
-total_count = 0
-subject_one_count = 0
 font = cv2.FONT_HERSHEY_SIMPLEX
 list_of_videos = []
 cascade_path = "face_cascades/haarcascade_profileface.xml"
@@ -112,13 +110,12 @@ if __name__ == '__main__':
 	args = vars(ap.parse_args())
 	path = args["videos"]
 	for f in os.listdir(path):
-		list_of_videos = glob.glob(os.path.join(os.path.abspath(path), f) + "/*.mp4")
+		list_of_videos = glob.glob(os.path.join(os.path.abspath(path), f))
 		print(os.path.join(os.path.abspath(path), f) + "*.mp4")
 		print(list_of_videos)
 		if os.path.exists("model.yaml"):
 			recognizer.load("model.yaml")
 			for video in list_of_videos:
-				print("hello")
 				camera = cv2.VideoCapture(os.path.join(path, video))
 				while True:
 					starttime = time.time()
@@ -133,10 +130,7 @@ if __name__ == '__main__':
 						frame_processed = draw_faces(frame_processed, faces)
 						label = recognize_face(frame_orginal, faces)
 						frame_processed = put_label_on_face(frame_processed, faces, label)
-						for i in label:
-							total_count = total_count + 1
-							if i == 1:
-								subject_one_count = subject_one_count + 1
+
 					cv2.imshow("window", frame_processed)
 					key = cv2.waitKey(1) & 0xFF
 					if key == ord("q"):
