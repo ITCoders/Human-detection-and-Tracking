@@ -105,9 +105,8 @@ Mat draw_faces(Mat frame1, vector<Rect> faces)
 {   
     for ( size_t i = 0; i < faces.size(); i++ )
     {   
-        /*Drawing circle around faces*/
-        Point center( faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2 );
-        ellipse( frame1, center, Size( faces[i].width/2, faces[i].height/2 ), 0, 0, 360, Scalar( 0, 250, 255 ), 4, 8, 0 );
+        /*Drawing rectangle around faces*/
+        rectangle(frame1, Point(faces[i].x, faces[i].y), Point(faces[i].x + faces[i].width, faces[i].y + faces[i].height), Scalar(0, 250, 255), 2, LINE_8, 0);
     }
     return frame1;
 
@@ -144,7 +143,8 @@ Mat put_label_on_face(Mat frame,vector<Rect> faces,int* label)
         ss << label[j];
         string str_label = ss.str();
         /*writing label on the image frame*/
-	    putText(frame, str_label, Point(faces[j].x, faces[j].y), FONT_HERSHEY_SIMPLEX,2, Scalar(0,255,255), 4);
+        /*putText(InputOutputArray img, const String& text, Point org, int fontFace, double fontScale, Scalar color, int thickness=1, int lineType=LINE_8, bool bottomLeftOrigin=false )*/
+	    putText(frame, str_label, Point(faces[j].x, faces[j].y), FONT_HERSHEY_SIMPLEX,1, Scalar(0,0,255), 2);
 	}
 	return frame;
 }
