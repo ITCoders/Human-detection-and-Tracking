@@ -9,14 +9,14 @@
 using namespace std;
 using namespace cv;
 
-String face_cascade1_name = "haarcascade_profileface.xml";
+String face_cascade1_name = "face_cascades/haarcascade_profileface.xml";
 CascadeClassifier face_cascade1;
 Ptr<face::FaceRecognizer> recognizer = face::createLBPHFaceRecognizer();
 vector<Rect> detect_faces( Mat frame);
 Mat detect_people( Mat frame);
 Mat draw_faces(Mat frame1, vector<Rect> faces);
 int* recognize_face(Mat frame, vector<Rect> faces);
-Mat put_label_on_face(Mat frame,vector<Rect> faces,int* label)
+Mat put_label_on_face(Mat frame,vector<Rect> faces,int* label);
 
 
 int main (int argc, const char * argv[])
@@ -39,7 +39,7 @@ int main (int argc, const char * argv[])
 
     Mat frame,frame1,frame2;
     vector<Rect> faces;
-    int label[100];
+    int *label;
     while (true)
     {
         cap >> frame;
@@ -48,8 +48,8 @@ int main (int argc, const char * argv[])
         frame1=detect_people(frame);
         faces=detect_faces(frame);
         frame2=draw_faces(frame1, faces); /*draw circle around faces*/
-	label=recognize_face(frame,faces);
-	put_label_on_face(frame,face,label);
+	    label=recognize_face(frame,faces);
+	    put_label_on_face(frame,faces,label);
         imshow("human_detection and face_detction", frame);
         waitKey(1);
     }
@@ -117,16 +117,16 @@ int* recognize_face(Mat frame, vector<Rect> faces)
 {
 	int a;
 	double b;
-	int predict_label[100];
+	static int predict_label[100];
 	double predict_conf[100];
 	Mat frame_original_grayscale;
 	for ( size_t i = 0; i < faces.size(); i++ )
 	{
-		cv::cvtColor( frame, frame_original_grayscale, COLOR_BGR2GRAY );
+		cv::cvtColor( frame, frame_original_grayscale, COLOR_BGR2GRAY ); /*converting frame to grayscale*/
 		equalizeHist(frame_original_grayscale,frame_original_grayscale); 
 		
-		
-		recognizer->predict(frame_original_grayscale, a,b);
+		/*recognizing faces to predict label and confidence factor*/ 
+		recognizer->predict(frame_original_grayscale, a,b); 
 		predict_label[i]=a;
 		predict_conf[i]=b;
 		cout << "label="<<a <<endl<< "conf="<<b << endl;
@@ -137,14 +137,16 @@ int* recognize_face(Mat frame, vector<Rect> faces)
 
 Mat put_label_on_face(Mat frame,vector<Rect> faces,int* label)
 {
-	int i=0;
 	for ( size_t j = 0; j < faces.size(); j++ )
 	{
-	cv::putText(frame, str(label[j]), textOrg, fontFace,2, Scalar::all(255), 3,8);
-	i++;
+        /*converting integer to string*/
+        stringstream ss;
+        ss << label[j];
+        string str_label = ss.str();
+        /*writing label on the image frame*/
+	    putText(frame, str_label, Point(faces[j].x, faces[j].y), FONT_HERSHEY_SIMPLEX,2, Scalar(0,255,255), 4);
 	}
 	return frame;
 }
 
 
-}
