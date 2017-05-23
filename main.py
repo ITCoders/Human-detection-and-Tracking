@@ -14,7 +14,7 @@ face_cascade = cv2.CascadeClassifier(cascade_path)
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 recognizer = cv2.face.createLBPHFaceRecognizer()
-
+count=0
 
 def detect_people(frame):
 	"""
@@ -62,7 +62,7 @@ def recognize_face(frame_orginal, faces):
 		a, b = predict_tuple
 		predict_label.append(a)
 		predict_conf.append(b)
-		print(predict_tuple)
+		print("Predition label, confidence: " + str(predict_tuple))
 	return predict_label
 
 
@@ -100,6 +100,26 @@ def put_label_on_face(frame, faces, labels):
 		i += 1
 	return frame
 
+def background_subtraction(previous_frame, frame_resized_grayscale, min_area):
+	"""
+	This function returns 1 for the frames in which the area 
+	after subtraction with previous frame is greater than minimum area
+	defined. 
+	Thus expensive computation of human detection face detection 
+	and face recognition is not done on all the frames.
+	Only the frames undergoing significant amount of change (which is controlled min_area)
+	are processed for detection and recognition.
+	"""
+	frameDelta = cv2.absdiff(previous_frame, frame_resized_grayscale)
+	thresh = cv2.threshold(frameDelta, 25, 255, cv2.THRESH_BINARY)[1]
+	thresh = cv2.dilate(thresh, None, iterations=2)
+	im2, cnts, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+	temp=0
+	for c in cnts:
+		# if the contour is too small, ignore it
+		if cv2.contourArea(c) > min_area:
+			temp=1
+	return temp		
 
 if __name__ == '__main__':
 	"""
@@ -117,27 +137,45 @@ if __name__ == '__main__':
 			recognizer.load("model.yaml")
 			for video in list_of_videos:
 				camera = cv2.VideoCapture(os.path.join(path, video))
+				grabbed, frame = camera.read()
+				frame_resized = imutils.resize(frame, width=min(800, frame.shape[1]))
+				frame_resized_grayscale = cv2.cvtColor(frame_resized, cv2.COLOR_BGR2GRAY)
+				print(frame_resized.shape)
+
+				# defining min cuoff area
+				min_area=(3000/800)*frame_resized.shape[1] 
+
 				while True:
 					starttime = time.time()
+					previous_frame = frame_resized_grayscale
 					grabbed, frame = camera.read()
 					if not grabbed:
 						break
-					frame_orginal = imutils.resize(frame, width=min(500, frame.shape[1]))
-					frame_orginal1 = cv2.cvtColor(frame_orginal, cv2.COLOR_BGR2GRAY)
-					frame_processed = detect_people(frame_orginal1)
-					faces = detect_face(frame_orginal)
-					if len(faces) > 0:
-						frame_processed = draw_faces(frame_processed, faces)
-						label = recognize_face(frame_orginal, faces)
-						frame_processed = put_label_on_face(frame_processed, faces, label)
+					frame_resized = imutils.resize(frame, width=min(800, frame.shape[1]))
+					frame_resized_grayscale = cv2.cvtColor(frame_resized, cv2.COLOR_BGR2GRAY)
+					temp=background_subtraction(previous_frame, frame_resized_grayscale, min_area)
+					if temp==1:		
+						frame_processed = detect_people(frame_resized)
+						faces = detect_face(frame_resized)
+						if len(faces) > 0:
+							frame_processed = draw_faces(frame_processed, faces)
+							label = recognize_face(frame_resized, faces)
+							frame_processed = put_label_on_face(frame_processed, faces, label)
 
-					cv2.imshow("window", frame_processed)
-					key = cv2.waitKey(1) & 0xFF
-					if key == ord("q"):
-						break
+						cv2.imshow("Detected Human and face", frame_processed)
+						key = cv2.waitKey(1) & 0xFF
+						if key == ord("q"):
+							break
+						endtime = time.time()
+						print("Time to process a frame: " + str(starttime-endtime))	
+					else:
+						count=count+1
+									
+				print("Number of frame skipped in the video= " + str(count))
 				camera.release()
 				cv2.destroyAllWindows()
-				endtime = time.time()
+				
+				
 		else:
 			print("model file not found")
 		list_of_videos = []
