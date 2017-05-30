@@ -45,12 +45,15 @@ int main (int argc, const char * argv[])
         cap >> frame;
         if (frame.empty())
             break;
+        int height;
+        height=((frame.size().height)*800)/frame.size().width;
+        resize(frame, frame, Size(800, height));
         frame1=detect_people(frame);
         faces=detect_faces(frame);
         frame2=draw_faces(frame1, faces); /*draw circle around faces*/
 	    label=recognize_face(frame,faces);
 	    put_label_on_face(frame,faces,label);
-        imshow("human_detection and face_detction", frame);
+        imshow("human_detection and face_detection", frame);
         waitKey(1);
     }
     return 0;
@@ -60,9 +63,8 @@ Mat detect_people( Mat frame)
 {   
     HOGDescriptor hog;
     hog.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector());
-	/*resize(frame, frame, Size(),0.5,0.5);*/
     vector<Rect> detected, detected_filtered;
-    hog.detectMultiScale(frame, detected, 0, Size(8,8), Size(32,32), 1.05, 2);
+    hog.detectMultiScale(frame, detected, 0, Size(8,8), Size(16,16), 1.06, 2);
     size_t i, j;
     /*checking for the distinctly detected human in a frame*/
     for (i=0; i<detected.size(); i++) 
@@ -82,7 +84,7 @@ Mat detect_people( Mat frame)
         r.width = cvRound(r.width*0.8);
         r.y += cvRound(r.height*0.07);
         r.height = cvRound(r.height*0.8);
-        rectangle(frame, r.tl(), r.br(), Scalar(0,255,0), 3);       
+        rectangle(frame, r.tl(), r.br(), Scalar(0,0,255), 2);       
     }
  
         return frame;
@@ -93,11 +95,9 @@ vector<Rect> detect_faces( Mat frame)
 	vector<Rect> faces;
     Mat frame_gray;
     cvtColor( frame, frame_gray, COLOR_BGR2GRAY ); /*converting input image in grayscale form*/
-    equalizeHist( frame_gray, frame_gray ); 
-    
-    /*resize(frame_gray, frame_gray, Size(),0.5,0.5);*/
+    //equalizeHist( frame_gray, frame_gray ); 
     /*Detecting faces*/
-    face_cascade1.detectMultiScale( frame_gray, faces, 1.2, 2, 0|CASCADE_SCALE_IMAGE, Size(30, 30) );
+    face_cascade1.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CASCADE_SCALE_IMAGE, Size(20, 20) );
     return faces;  
 }
 
@@ -106,7 +106,7 @@ Mat draw_faces(Mat frame1, vector<Rect> faces)
     for ( size_t i = 0; i < faces.size(); i++ )
     {   
         /*Drawing rectangle around faces*/
-        rectangle(frame1, Point(faces[i].x, faces[i].y), Point(faces[i].x + faces[i].width, faces[i].y + faces[i].height), Scalar(0, 250, 255), 2, LINE_8, 0);
+        rectangle(frame1, Point(faces[i].x, faces[i].y), Point(faces[i].x + faces[i].width, faces[i].y + faces[i].height), Scalar(0, 255, 0), 2, LINE_8, 0);
     }
     return frame1;
 
@@ -121,8 +121,8 @@ int* recognize_face(Mat frame, vector<Rect> faces)
 	Mat frame_original_grayscale;
 	for ( size_t i = 0; i < faces.size(); i++ )
 	{
-		cv::cvtColor( frame, frame_original_grayscale, COLOR_BGR2GRAY ); /*converting frame to grayscale*/
-		equalizeHist(frame_original_grayscale,frame_original_grayscale); 
+		cvtColor( frame, frame_original_grayscale, COLOR_BGR2GRAY ); /*converting frame to grayscale*/
+		//equalizeHist(frame_original_grayscale,frame_original_grayscale); 
 		
 		/*recognizing faces to predict label and confidence factor*/ 
 		recognizer->predict(frame_original_grayscale, a,b); 
@@ -144,7 +144,7 @@ Mat put_label_on_face(Mat frame,vector<Rect> faces,int* label)
         string str_label = ss.str();
         /*writing label on the image frame*/
         /*putText(InputOutputArray img, const String& text, Point org, int fontFace, double fontScale, Scalar color, int thickness=1, int lineType=LINE_8, bool bottomLeftOrigin=false )*/
-	    putText(frame, str_label, Point(faces[j].x, faces[j].y), FONT_HERSHEY_SIMPLEX,1, Scalar(0,0,255), 2);
+	    putText(frame, str_label, Point(faces[j].x, faces[j].y), FONT_HERSHEY_SIMPLEX,1, Scalar(255,255,255), 2);
 	}
 	return frame;
 }

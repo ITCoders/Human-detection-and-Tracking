@@ -24,7 +24,7 @@ def detect_people(frame):
 	Returns:
 		processed frame
 	"""
-	(rects, weights) = hog.detectMultiScale(frame, winStride=(4, 4), padding=(16, 16), scale=1.06)
+	(rects, weights) = hog.detectMultiScale(frame, winStride=(8, 8), padding=(16, 16), scale=1.06)
 	rects = non_max_suppression(rects, probs=None, overlapThresh=0.65)
 	for (x, y, w, h) in rects:
 		cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
@@ -40,7 +40,7 @@ def detect_face(frame):
 	Returns:
 	coordinates of detected faces
 	"""
-	faces = face_cascade.detectMultiScale(frame)
+	faces = face_cascade.detectMultiScale(frame, 1.1, 2, 0, (20, 20) )
 	return faces
 
 
@@ -138,6 +138,7 @@ if __name__ == '__main__':
 			for video in list_of_videos:
 				camera = cv2.VideoCapture(os.path.join(path, video))
 				grabbed, frame = camera.read()
+				print(frame.shape)
 				frame_resized = imutils.resize(frame, width=min(800, frame.shape[1]))
 				frame_resized_grayscale = cv2.cvtColor(frame_resized, cv2.COLOR_BGR2GRAY)
 				print(frame_resized.shape)
@@ -156,7 +157,7 @@ if __name__ == '__main__':
 					temp=background_subtraction(previous_frame, frame_resized_grayscale, min_area)
 					if temp==1:		
 						frame_processed = detect_people(frame_resized)
-						faces = detect_face(frame_resized)
+						faces = detect_face(frame_resized_grayscale)
 						if len(faces) > 0:
 							frame_processed = draw_faces(frame_processed, faces)
 							label = recognize_face(frame_resized, faces)
@@ -170,8 +171,9 @@ if __name__ == '__main__':
 						print("Time to process a frame: " + str(starttime-endtime))	
 					else:
 						count=count+1
+						print("Number of frame skipped in the video= " + str(count))
 									
-				print("Number of frame skipped in the video= " + str(count))
+				
 				camera.release()
 				cv2.destroyAllWindows()
 				
