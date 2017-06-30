@@ -1,4 +1,7 @@
 # Human detection and Tracking
+
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/arpit1997)
+
 ## Introduction
 _In this project we have worked on the problem of human detection,face detection, face recognition and tracking an individual. Our project is capable of detecting a human and its face in a given video and storing Local Binary Pattern Histogram (LBPH) features of the detected faces. LBPH features are the key points extracted from an image which is used to recognize and categorize images. Once a human is detected in video, we have tracked that person assigning him a label. We have used the stored LBPH features of individuals to recognize them in any other videos. After scanning through various videos our program gives output like- person labeled as subject1 is seen in video taken by camera1, subject1 is seen in video by camera2. In this way we have tracked an individual by recognizing him/her in the video taken by multiple cameras. Our whole work is based on the application of machine learning and image processing with the help of [openCV](http://opencv.org)._**This code is built on opencv 3.1.1, python 3.4 and C++.**
 ## Requirements
