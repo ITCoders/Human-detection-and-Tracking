@@ -13,7 +13,7 @@ cascade_path = "face_cascades/haarcascade_profileface.xml"
 face_cascade = cv2.CascadeClassifier(cascade_path)
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
-recognizer = cv2.face.createLBPHFaceRecognizer()
+recognizer = cv2.face.createLBPHFaceRecognizer_create()
 count=0
 
 def detect_people(frame):
