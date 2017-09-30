@@ -53,12 +53,21 @@ int main( int argc, char** argv ){
     if(frame.rows==0 || frame.cols==0)
       break;
     
-    // update the tracking result
-    tracker->update(frame,roi);
-    // draw rectangle around the tracked object
-    rectangle( frame, roi, Scalar( 255, 0, 0 ), 2, 1 );
-    // show image with the tracked object
-    imshow("tracker",frame);
+    //continue tracking only if ROI is in the scope of video
+    //stop if ROI goes out of range of image
+    if (roi.x>=1 && roi.y>=1 && (roi.x+roi.width) < frame.cols && (roi.y+roi.height) <frame.rows)
+    {
+      // update the tracking result
+      tracker->update(frame,roi);
+      // draw rectangle around the tracked object
+      rectangle( frame, roi, Scalar( 255, 0, 0 ), 2, 1 );
+      // show image with the tracked object
+      imshow("tracker",frame);
+    }
+
+    else{
+      imshow("tracker",frame);
+    }
     
     //quit on ESC button
     if(waitKey(1)==27)break;
