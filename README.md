@@ -31,8 +31,8 @@ _In this project we have worked on the problem of human detection,face detection
 * The repository is structured as follows:
 	* `main.py` : This is the main python file that detects and recognizes humans.
 	* `main.cpp` : This is the main C++ file that detects and recognizes humans.
-	* 'create_face_model.py' : This python script is used to create model file using the given data in `data/` folder 
-	* 'model.yaml' : This file contains trained model for given data. This trained model contains LBPH features of each and every face for given data.
+	* `create_face_model.py` : This python script is used to create model file using the given data in `data/` folder 
+	* `model.yaml` : This file contains trained model for given data. This trained model contains LBPH features of each and every face for given data.
 	* `face_cascades/` : This directory contains sample data for testing our codes. This data is prepared by extracting face images of a praticular person from some videos.
 	* `scripts/` : This directory contains some useful scripts that we used to work on different problems.
 	* `video/` : This directory contains some of the videos that we used to while testing.
@@ -63,9 +63,9 @@ Example- for our directory structure it is:
  ./main /video/2.mp4
 ```
 * creating your own model file; just follow the steps given below to create your own model file:
-	* for each individual rename the images as `subjectx.y.jpg` for example for person 1 images should be named as 'subject01.0.jpg' , `subject01.1.jpg` and so on.
-	* put all the images of all the persons in a single folder then run this command given below:
-		`python3 create_face_model.py /path/to/persons_images/` 
+	* for each individual rename the images as `subjectx.y.jpg` for example for person 1 images should be named as `subject01.0.jpg` , `subject01.1.jpg` and so on.
+	* put all the images of all the persons in a single folder for example you can see `data\` folder then run this command given below:
+		`python3 create_face_model.py -i /path/to/persons_images/` 
 
 ## Performance of code
 * Since this is a computer vision project it requires a lot of computation power and performance of the code is kind of an issue here.
