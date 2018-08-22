@@ -74,10 +74,9 @@ Example- for our directory structure it is:
 	* on a machine with Intel i5 quad-core processor we got an output of 12fps.
 
 ## Results
-![alt text](https://raw.githubusercontent.com/ITCoders/Human-detection-and-Tracking/master/results/g.jpg "Logo Title Text 1")
-![alt text](https://raw.githubusercontent.com/ITCoders/Human-detection-and-Tracking/master/results/k.jpg "Logo Title Text 1")
-![alt text](https://raw.githubusercontent.com/ITCoders/Human-detection-and-Tracking/master/results/k.jpg "Logo Title Text 1")
-![alt text](https://raw.githubusercontent.com/ITCoders/Human-detection-and-Tracking/master/results/o.jpg "Logo Title Text 1")
+![alt text](https://raw.githubusercontent.com/wiki/Linzaer/Face-Track-Detect-Extract/pic1.jpg"Logo Title Text 1")
+![alt text](https://raw.githubusercontent.com/wiki/Linzaer/Face-Track-Detect-Extract/pic2.jpg"Logo Title Text 1")
+![alt text](https://raw.githubusercontent.com/wiki/Linzaer/Face-Track-Detect-Extract/pic3.jpg "Logo Title Text 1")
 
 You can find project report [here](https://github.com/ITCoders/Human-detection-and-Tracking/raw/master/results/HUMAN%20DETECTION%20ANDaRECOGNITION.pdf)
 ## To do
