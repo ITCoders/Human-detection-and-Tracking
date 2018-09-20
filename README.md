@@ -15,7 +15,7 @@ _In this project we have worked on the problem of human detection,face detection
 		`sudo apt-get install python3`
 * **python libraries:**
 	Here is a list of all the python dependencies 
-	* Python Image Library (PIL)
+	* Python Image Library (PILLOW)
 	* Imutils
 	* numpy
 
@@ -38,6 +38,15 @@ _In this project we have worked on the problem of human detection,face detection
 	* `video/` : This directory contains some of the videos that we used to while testing.
 
 ## Installation 
+
+## Python
+Don't forget to install the necessary libraries described in the install paragraph above.
+
+First you need to run the create_face_model.py file, which uses the images in /data to create a .yaml file
+* In the project folder run 
+```sh 
+python create_face_model.py
+```
 * To run the python version of the code you have to put all the input videos in one folder and then provide the path of that folder as command line argument:
 ```sh
 python3 main.py /path/to/input/videos/  
@@ -46,6 +55,8 @@ Example- for our directory structure it is:
 ```sh
  python3 main.py /video 
 ```
+
+## C++
 * To compile the C++ version of the code with openCV the command is:
 ```sh
  g++ -ggdb `pkg-config --cflags opencv` -o `basename name_of_file.cpp .cpp` name_of_file.cpp `pkg-config --libs opencv` 
