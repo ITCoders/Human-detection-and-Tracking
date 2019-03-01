@@ -49,11 +49,11 @@ python create_face_model.py
 ```
 * To run the python version of the code you have to put all the input videos in one folder and then provide the path of that folder as command line argument:
 ```sh
-python3 main.py /path/to/input/videos/  
+python3 main.py -v /path/to/input/videos/  
 ```
 Example- for our directory structure it is: 
 ```sh
- python3 main.py /video 
+ python3 main.py -v /video 
 ```
 
 ## C++
