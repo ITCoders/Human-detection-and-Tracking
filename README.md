@@ -99,6 +99,3 @@ You can find project report [here](https://github.com/ITCoders/Human-detection-a
 ## Special Thanks to:
 * [Jignesh S. Bhatt](http://www.iiitvadodara.ac.in/faculty/jsb001.html) - Thank you for mentoring this project
 * [Kamal Awasthi](http://github.com/KamalAwasthi) - Helped in testing the code
-
-## Support the project
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/arpitsolanki/)
