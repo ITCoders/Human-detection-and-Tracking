@@ -40,7 +40,7 @@ _Bu projede insan tespiti, yüz tespiti, yüz tanıma ve bireyi takip etme sorun
 
 ## Kurulum
 
-## Piton
+## Python
 Yukarıdaki yükleme paragrafında açıklanan gerekli kitaplıkları yüklemeyi unutmayın.
 
 İlk önce çalıştırmanız gerekir create_face_model.py oluşturmak için / data içindeki görüntüleri kullanan bir dosya.yaml dosyası
@@ -74,29 +74,29 @@ python3 main.py -v /path/to/input/videos/
 ```sh
  ./main /video/2.mp4
 ```
-* creating your own model file; just follow the steps given below to create your own model file:
-	* for each individual rename the images as `subjectx.y.jpg` for example for person 1 images should be named as `subject01.0.jpg` , `subject01.1.jpg` and so on.
-	* put all the images of all the persons in a single folder for example you can see `data\` folder then run this command given below:
+* kendi model dosyanızı oluşturma; Kendi model dosyanızı oluşturmak için aşağıda verilen adımları uygulamanız yeterlidir:
+	* her birey için görüntüleri şu şekilde yeniden adlandırın: `subjectx.y.jpg` örneğin kişi 1 için resimler şu şekilde adlandırılmalıdır `subject01.0.jpg` , `subject01.1.jpg` ve benzeri.
+	* tüm kişilerin tüm resimlerini tek bir klasöre koyun, örneğin görebilirsiniz `data\` klasör daha sonra aşağıda verilen bu komutu çalıştırın:
 		`python3 create_face_model.py -i /path/to/persons_images/` 
 
-## Performance of code
-* Since this is a computer vision project it requires a lot of computation power and performance of the code is kind of an issue here.
-* The code was tested on two different machines to analyse performace. The input was 30fps 720p video.
-	* On a machine with AMD A4 dual-core processor we got an output of 4fps which is quite bad.
-	* on a machine with Intel i5 quad-core processor we got an output of 12fps.
+## Kodun performansı
+* Bu bir bilgisayar vizyonu projesi olduğundan, çok fazla hesaplama gücü gerektirir ve kodun performansı burada bir tür sorundur.
+* Kod, performansı analiz etmek için iki farklı makinede test edildi. Giriş 30fps 720p video idi.
+	* AMD A4 çift çekirdekli işlemcili bir makinede oldukça kötü olan 4 fps çıktı aldık.
+	* Intel i5 dört çekirdekli işlemciye sahip bir makinede saniyede 12 kare çıktı elde ettik.
 
-## Results
+## Sonuçlar
 ![alt text](https://raw.githubusercontent.com/ITCoders/Human-detection-and-Tracking/master/results/g.jpg "Logo Title Text 1")
 ![alt text](https://raw.githubusercontent.com/ITCoders/Human-detection-and-Tracking/master/results/k.jpg "Logo Title Text 1")
 ![alt text](https://raw.githubusercontent.com/ITCoders/Human-detection-and-Tracking/master/results/k.jpg "Logo Title Text 1")
 ![alt text](https://raw.githubusercontent.com/ITCoders/Human-detection-and-Tracking/master/results/o.jpg "Logo Title Text 1")
 
-You can find project report [here](https://github.com/ITCoders/Human-detection-and-Tracking/raw/master/results/HUMAN%20DETECTION%20ANDaRECOGNITION.pdf)
-## To do
-* improve the performance of the code
-* improve the accuracy of the code and reducing the false positive rate.
-* improve the face recognition accuracy to over 90 percent
+Proje raporunu bulabilirsiniz [here](https://github.com/ITCoders/Human-detection-and-Tracking/raw/master/results/HUMAN%20DETECTION%20ANDaRECOGNITION.pdf)
+## Gürültü
+* kodun performansını artırın
+* kodun doğruluğunu artırın ve yanlış pozitif oranı azaltın.
+* yüz tanıma doğruluğunu yüzde 90'ın üzerine çıkarın
 
-## Special Thanks to:
-* [Jignesh S. Bhatt](http://www.iiitvadodara.ac.in/faculty/jsb001.html) - Thank you for mentoring this project
-* [Kamal Awasthi](http://github.com/KamalAwasthi) - Helped in testing the code
+## Özel Teşekkürler:
+* [Jignesh S. Bhatt](http://www.iiitvadodara.ac.in/faculty/jsb001.html) - Bu projeye rehberlik ettiğiniz için teşekkür ederiz
+* [Kamal Awasthi](http://github.com/KamalAwasthi) - Kodu test etmede yardımcı oldu
