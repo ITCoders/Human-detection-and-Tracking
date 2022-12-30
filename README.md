@@ -1,20 +1,20 @@
-# Human detection and Tracking
+# Human detection and Tracking Türkçe Çeviri (Turkish Translation)
 
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/arpit1997)
 
-## Introduction
-_In this project we have worked on the problem of human detection,face detection, face recognition and tracking an individual. Our project is capable of detecting a human and its face in a given video and storing Local Binary Pattern Histogram (LBPH) features of the detected faces. LBPH features are the key points extracted from an image which is used to recognize and categorize images. Once a human is detected in video, we have tracked that person assigning him a label. We have used the stored LBPH features of individuals to recognize them in any other videos. After scanning through various videos our program gives output like- person labeled as subject1 is seen in video taken by camera1, subject1 is seen in video by camera2. In this way we have tracked an individual by recognizing him/her in the video taken by multiple cameras. Our whole work is based on the application of machine learning and image processing with the help of [openCV](http://opencv.org)._**This code is built on opencv 3.1.1, python 3.4 and C++, other versions of opencv are NOT SUPPORTED.**
-## Requirements
+## Giriş
+_Bu projede insan tespiti, yüz tespiti, yüz tanıma ve bireyi takip etme sorunu üzerinde çalıştık. Projemiz, belirli bir videoda bir insanı ve yüzünü tespit edebilmekte ve tespit edilen yüzlerin Yerel ikili Desen Histogramını (LBPH) saklayabilmektedir. LBPH özellikleri, görüntüleri tanımak ve kategorize etmek için kullanılan bir görüntüden çıkarılan kilit noktalardır. Videoda bir insan tespit edildiğinde, ona bir etiket atayan kişinin izini sürdük. Diğer videolarda onları tanımak için bireylerin depolanmış LBPH özelliklerini kullandık. Çeşitli videoları taradıktan sonra programımız, camera1 tarafından çekilen videoda subject1, camera2 tarafından videoda subject1 olarak etiketlenmiş kişi gibi çıktı verir. Bu şekilde bir kişiyi birden fazla kamera tarafından çekilen videoda tanıyarak takip ettik. Tüm çalışmalarımız [openCV] yardımıyla makine öğrenimi ve görüntü işleme uygulamasına dayanmaktadır (http://opencv.org )._ **Bu kod opencv 3.1.1, python 3.4 ve C ++ üzerine kurulmuştur, opencv'nin diğer sürümleri desteklenmez.**
+## Gereksinimler
 * **opencv [v3.1.1]**
-	* **Installation in linux:**
-			For complete installation of opencv in ubuntu you can refer [here](http://www.pyimagesearch.com/2015/06/22/install-opencv-3-0-and-python-2-7-on-ubuntu/).
-	* **Installation in windows**
-			For complete installation of opencv in windows you can refer [here](https://putuyuwono.wordpress.com/2015/04/23/building-and-installing-opencv-3-0-on-windows-7-64-bit/)
+	* ** Linux'ta kurulum:**
+			Ubuntu'da opencv'nin tam kurulumu için [buraya tıklayabilirsiniz](http://www.pyimagesearch.com/2015/06/22/install-opencv-3-0-and-python-2-7-on-ubuntu/).
+	* ** Windows'ta kurulum**
+			Windows'ta opencv'nin tam kurulumu için [buraya tıklayabilirsiniz](https://putuyuwono.wordpress.com/2015/04/23/building-and-installing-opencv-3-0-on-windows-7-64-bit/)
 * **python3**
-	* In Ubuntu python 3.4 can be installed via terminal with the command given below:
+	* Ubuntu'da python 3.4, aşağıda verilen komutla terminal üzerinden kurulabilir:
 		`sudo apt-get install python3`
-* **python libraries:**
-	Here is a list of all the python dependencies 
+* ** python kütüphaneleri:**
+	İşte tüm python kütüphanelerinin bir listesi
 	* Python Image Library (PILLOW)
 	* Imutils
 	* numpy
@@ -22,80 +22,81 @@ _In this project we have worked on the problem of human detection,face detection
 * **C++**
 
 ## Approach
-* The code follows the steps given below:
-	1. First it reads a video and process each frame one by one.
-	2. For each frame it tries to detect a human. If a human is detected it draws a rectangle around it.
-	3. after completing step 2 it tries to detect human face.
-	4. if a human face is detected it tries to recognize it with a pre-trained model file.
-	5. If human face is recognized it puts the label on that human face else it moves to step 2 again for next frame 
-* The repository is structured as follows:
-	* `main.py` : This is the main python file that detects and recognizes humans.
-	* `main.cpp` : This is the main C++ file that detects and recognizes humans.
-	* `create_face_model.py` : This python script is used to create model file using the given data in `data/` folder 
-	* `model.yaml` : This file contains trained model for given data. This trained model contains LBPH features of each and every face for given data.
-	* `face_cascades/` : This directory contains sample data for testing our codes. This data is prepared by extracting face images of a praticular person from some videos.
-	* `scripts/` : This directory contains some useful scripts that we used to work on different problems.
-	* `video/` : This directory contains some of the videos that we used to while testing.
+## Yaklaşma
+* Kod aşağıda verilen adımları takip eder:
+	1. Önce bir video okur ve her kareyi tek tek işler.
+	2. Her kare için bir insanı tespit etmeye çalışır. Bir insan tespit edilirse etrafına bir dikdörtgen çizer.
+	3. 2. adımı tamamladıktan sonra insan yüzünü tespit etmeye çalışır.
+	4. bir insan yüzü tespit edilirse, onu önceden eğitilmiş bir model dosyasıyla tanımaya çalışır.	
+	5. İnsan yüzü tanınırsa, etiketi o insan yüzüne koyar, aksi takdirde bir sonraki kare için tekrar 2. adıma geçer
+* Depo aşağıdaki gibi yapılandırılmıştır:
+	* `main.py` : Bu, insanları algılayan ve tanıyan ana python dosyasıdır.
+	* `main.cpp`: Bu, insanları algılayan ve tanıyan ana C ++ dosyasıdır.
+	* `create_face_model.py` : Bu python betiği, `data /` klasöründeki verilen verileri kullanarak model dosyası oluşturmak için kullanılır
+	* `model.yaml`: Bu dosya, verilen veriler için eğitilmiş model içerir. Bu eğitimli model, verilen veriler için her yüzün LBPH özelliklerini içerir.
+	* '`face_cascades/`: Bu dizin, kodlarımızı test etmek için örnek veriler içerir. Bu veriler, bazı videolardan pratiküler bir kişinin yüz görüntüleri çıkarılarak hazırlanır.
+	* `scripts/`: Bu dizin, farklı sorunlar üzerinde çalıştığımız bazı yararlı komut dosyaları içerir.
+	* `video/`: Bu dizin, test ederken kullandığımız bazı videoları içerir.
 
-## Installation 
+## Kurulum
 
 ## Python
-Don't forget to install the necessary libraries described in the install paragraph above.
+Yukarıdaki yükleme paragrafında açıklanan gerekli kitaplıkları yüklemeyi unutmayın.
 
-First you need to run the create_face_model.py file, which uses the images in /data to create a .yaml file
-* In the project folder run 
+İlk önce çalıştırmanız gerekir create_face_model.py oluşturmak için / data içindeki görüntüleri kullanan bir dosya.yaml dosyası
+* Proje klasöründe çalıştırın
 ```sh 
 python create_face_model.py
 ```
-* To run the python version of the code you have to put all the input videos in one folder and then provide the path of that folder as command line argument:
+* Kodun python sürümünü çalıştırmak için tüm giriş videolarını tek bir klasöre koymanız ve ardından bu klasörün yolunu komut satırı argümanı olarak sağlamanız gerekir:
 ```sh
 python3 main.py -v /path/to/input/videos/  
 ```
-Example- for our directory structure it is: 
+Örnek- dizin yapımız için:
 ```sh
  python3 main.py -v /video 
 ```
 
 ## C++
-* To compile the C++ version of the code with openCV the command is:
+* Kodun C ++ sürümünü openCV ile derlemek için komut:
 ```sh
  g++ -ggdb `pkg-config --cflags opencv` -o `basename name_of_file.cpp .cpp` name_of_file.cpp `pkg-config --libs opencv` 
 ```
-Example- for our directory structure it is: 
+Örnek- dizin yapımız için:
 ```sh
  g++ -ggdb `pkg-config --cflags opencv` -o `basename main.cpp .cpp` main.cpp `pkg-config --libs opencv` 
 ```  
-* To run the C++ version of the code you have to put all the input videos in one folder and then provide the path of that video as command line argument:
+* Kodun C ++ sürümünü çalıştırmak için tüm giriş videolarını tek bir klasöre koymanız ve ardından o videonun yolunu komut satırı argümanı olarak sağlamanız gerekir:
 ```sh
 ./name_of_file /path/to/input/video_file 
 ```  
-Example- for our directory structure it is: 
+Örnek- dizin yapımız için:
 ```sh
  ./main /video/2.mp4
 ```
-* creating your own model file; just follow the steps given below to create your own model file:
-	* for each individual rename the images as `subjectx.y.jpg` for example for person 1 images should be named as `subject01.0.jpg` , `subject01.1.jpg` and so on.
-	* put all the images of all the persons in a single folder for example you can see `data\` folder then run this command given below:
+* kendi model dosyanızı oluşturma; Kendi model dosyanızı oluşturmak için aşağıda verilen adımları uygulamanız yeterlidir:
+	* her birey için görüntüleri şu şekilde yeniden adlandırın: `subjectx.y.jpg` örneğin kişi 1 için resimler şu şekilde adlandırılmalıdır `subject01.0.jpg` , `subject01.1.jpg` ve benzeri.
+	* tüm kişilerin tüm resimlerini tek bir klasöre koyun, örneğin görebilirsiniz `data\` klasör daha sonra aşağıda verilen bu komutu çalıştırın:
 		`python3 create_face_model.py -i /path/to/persons_images/` 
 
-## Performance of code
-* Since this is a computer vision project it requires a lot of computation power and performance of the code is kind of an issue here.
-* The code was tested on two different machines to analyse performace. The input was 30fps 720p video.
-	* On a machine with AMD A4 dual-core processor we got an output of 4fps which is quite bad.
-	* on a machine with Intel i5 quad-core processor we got an output of 12fps.
+## Kodun performansı
+* Bu bir bilgisayar vizyonu projesi olduğundan, çok fazla hesaplama gücü gerektirir ve kodun performansı burada bir tür sorundur.
+* Kod, performansı analiz etmek için iki farklı makinede test edildi. Giriş 30fps 720p video idi.
+	* AMD A4 çift çekirdekli işlemcili bir makinede oldukça kötü olan 4 fps çıktı aldık.
+	* Intel i5 dört çekirdekli işlemciye sahip bir makinede saniyede 12 kare çıktı elde ettik.
 
-## Results
+## Sonuçlar
 ![alt text](https://raw.githubusercontent.com/ITCoders/Human-detection-and-Tracking/master/results/g.jpg "Logo Title Text 1")
 ![alt text](https://raw.githubusercontent.com/ITCoders/Human-detection-and-Tracking/master/results/k.jpg "Logo Title Text 1")
 ![alt text](https://raw.githubusercontent.com/ITCoders/Human-detection-and-Tracking/master/results/k.jpg "Logo Title Text 1")
 ![alt text](https://raw.githubusercontent.com/ITCoders/Human-detection-and-Tracking/master/results/o.jpg "Logo Title Text 1")
 
-You can find project report [here](https://github.com/ITCoders/Human-detection-and-Tracking/raw/master/results/HUMAN%20DETECTION%20ANDaRECOGNITION.pdf)
-## To do
-* improve the performance of the code
-* improve the accuracy of the code and reducing the false positive rate.
-* improve the face recognition accuracy to over 90 percent
+Proje raporunu bulabilirsiniz [here](https://github.com/ITCoders/Human-detection-and-Tracking/raw/master/results/HUMAN%20DETECTION%20ANDaRECOGNITION.pdf)
+## Gürültü
+* kodun performansını artırın
+* kodun doğruluğunu artırın ve yanlış pozitif oranı azaltın.
+* yüz tanıma doğruluğunu yüzde 90'ın üzerine çıkarın
 
-## Special Thanks to:
-* [Jignesh S. Bhatt](http://www.iiitvadodara.ac.in/faculty/jsb001.html) - Thank you for mentoring this project
-* [Kamal Awasthi](http://github.com/KamalAwasthi) - Helped in testing the code
+## Özel Teşekkürler:
+* [Jignesh S. Bhatt](http://www.iiitvadodara.ac.in/faculty/jsb001.html) - Bu projeye rehberlik ettiğiniz için teşekkür ederiz
+* [Kamal Awasthi](http://github.com/KamalAwasthi) - Kodu test etmede yardımcı oldu
