@@ -67,7 +67,7 @@ cv2.destroyAllWindows()
 # Perform the tranining
 recognizer.train(images, np.array(labels))
 
-# Append the images with the extension .sad into image_paths
+# Append the images with the extension .sad into image paths 
 image_paths = [os.path.join(path, f)
                for f in os.listdir(path) if f.endswith('.sad')]
 for image_path in image_paths:
